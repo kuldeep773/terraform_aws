@@ -1,5 +1,10 @@
 terraform.tfvars
+*/terraform.tfvars
 terraform.tfstate
+*/terraform.tfstate
 terraform.tfstate.backup
+*/terraform.tfstate.backup
 .terraform
+*/.terraform
 mykey*
+*/mykey*
