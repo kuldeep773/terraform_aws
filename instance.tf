@@ -17,17 +17,13 @@ resource "aws_instance" "example"{
 		destination 	= "/tmp/script.sh"
 	}
 	
-	#provisioner "remote_exec"{
-	#	inline = [
-	#		"chmod +x /tmp/script.sh",
-	#		"sudo /tmp/script.sh",
-	#	]
-	#}
-
 	provisioner "remote-exec" {
   	 	 inline = [
-      			 "chmod +x /tmp/script.sh",
-      			 "sudo /tmp/script.sh",
+				"ll /tmp",
+				"sed -i '1s/^.*#//;s/\r$//' /tmp/script.sh",
+      			"chmod +x /tmp/script.sh",
+				"cd /tmp",
+      			"sudo ./script.sh",
     		 ]
   	}
 
