@@ -50,4 +50,15 @@ resource "aws_instance" "example"{
 
 output "ip"{
 	value = aws_instance.example.public_ip
+	description = "Pubic Ip of EC2 instance"
+}
+
+output "hostname"{
+	value = aws_instance.example.public_dns
+	description = "Hostname of the EC2 instance where nginx is installed"
+}
+
+output "private_dns"{
+	value = aws_instance.example.private_dns
+	description = "Private DNS name"
 }
