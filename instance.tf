@@ -6,6 +6,9 @@ resource "aws_key_pair" "mykey"{
 resource "aws_instance" "example"{
 	ami = var.AMIS[var.AWS_REGION]
 	instance_type = "t2.micro"
+	root_block_device {
+		delete_on_termination = true
+	}
 	
 	# VPC subnet for public ip1
 	subnet_id = "${aws_subnet.main-public-1.id}"
@@ -47,6 +50,22 @@ resource "aws_instance" "example"{
 	}
 }
 
+resource "aws_ebs_volume" "ebs-volume-1" {
+	availability_zone = "${aws_subnet.main-public-1.availability_zone}"
+  	size              = 20
+	type = "gp2"
+	tags = {
+    	Name = "extra volume"
+  	}
+}
+
+resource "aws_volume_attachment" "ebs-volume-1-attachment" {
+  	device_name = "/dev/xvdh"
+  	volume_id   = aws_ebs_volume.ebs-volume-1.id
+  	instance_id = aws_instance.example.id
+	force_detach = true
+
+}
 
 output "ip"{
 	value = aws_instance.example.public_ip
