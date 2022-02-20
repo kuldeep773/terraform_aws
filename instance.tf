@@ -26,15 +26,36 @@ resource "aws_instance" "example"{
 		source 		= "script.sh"
 		destination 	= "/tmp/script.sh"
 	}
+
+	provisioner "file"{
+		source 		= ".env"
+		destination 	= "/tmp/.env"
+	}
+
+	provisioner "file"{
+		source 		= "docker-compose.yaml"
+		destination 	= "/tmp/docker-compose.yaml"
+	}
 	
 	provisioner "remote-exec" {
-  	 	 inline = [
-				"ll /tmp",
-				"sed -i '1s/^.*#//;s/\r$//' /tmp/script.sh",
-      			"chmod +x /tmp/script.sh",
-				"cd /tmp",
-      			"sudo ./script.sh",
-    		 ]
+    inline = [
+      	"ll /tmp",
+		"sed -i '1s/^.*#//;s/\r$//' /tmp/script.sh",
+      	"chmod +x /tmp/script.sh",
+		"cd /tmp",
+      	"sudo bash script.sh",
+		"sudo mkdir airflow",
+		# "cd airflow",
+		# "mkdir ./dags ./logs ./plugins",
+		# "sudo mv /tmp/docker-compose.yaml .",
+		# "sudo apt-get remove -y docker-compose",
+		# "sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose",
+		# "sudo apt-get update",
+		# "sudo chmod +x /usr/local/bin/docker-compose",
+		# "sudo mv /usr/local/bin/docker-compose /usr/bin",
+		# "cd /tmp/airflow",
+		"docker-compose up",
+    ]
   	}
 
 	#provisioner "local-exec"{

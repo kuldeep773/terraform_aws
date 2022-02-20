@@ -9,4 +9,6 @@ terraform.tfstate.backup
 mykey*
 */mykey*
 private_ip.txt
-*/private_ip.txtt
+*/private_ip.txt
+.terraform.lock.hcl
+*/.terraform.lock.hcl
